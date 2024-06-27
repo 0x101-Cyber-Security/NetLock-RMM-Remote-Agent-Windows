@@ -186,12 +186,23 @@ namespace NetLock_RMM_Remote_Agent_Windows
                     })
                     .Build();
 
-                remote_server_client.On<string>("ReceiveCommand", async (command) =>
+                remote_server_client.On<string>("ReceiveMessage", async (command) =>
                 {
                     Logging.Handler.Debug("Service.Setup_SignalR", "Received command", command);
 
                     // Insert the logic here to execute the command
                     
+                    // Example: If the command is "sync", send a message to the local server to force a sync with the remote server
+                    if (command == "sync")
+                        await Local_Server_Send_Message("sync");
+                });
+
+                remote_server_client.On<string>("SendMessageToClientAndWaitForResponse", async (command) =>
+                {
+                    Logging.Handler.Debug("Service.Setup_SignalR", "Received command", command);
+
+                    // Insert the logic here to execute the command
+
                     // Example: If the command is "sync", send a message to the local server to force a sync with the remote server
                     if (command == "sync")
                         await Local_Server_Send_Message("sync");
