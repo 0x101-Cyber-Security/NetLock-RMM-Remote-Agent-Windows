@@ -126,3 +126,67 @@ C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\Projekte\NetLock Root\NetLock-R
 C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\Projekte\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock RMM Remote Agent (Windows).csproj.CopyComplete
 C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\Projekte\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock RMM Remote Agent (Windows).exe
 C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\Projekte\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock RMM Remote Agent (Windows).pdb
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\NetLock RMM Remote Agent (Windows).exe.config
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\NetLock RMM Remote Agent (Windows).exe
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\NetLock RMM Remote Agent (Windows).pdb
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.Http.Connections.Client.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.Http.Connections.Common.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.SignalR.Client.Core.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.SignalR.Client.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.SignalR.Common.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Bcl.TimeProvider.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Features.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Logging.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Options.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Primitives.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Buffers.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.IO.Pipelines.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Memory.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Text.Json.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Threading.Channels.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.ValueTuple.dll
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.Connections.Abstractions.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.Http.Connections.Client.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.Http.Connections.Common.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.SignalR.Client.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.SignalR.Client.Core.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.SignalR.Common.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.AspNetCore.SignalR.Protocols.Json.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Bcl.TimeProvider.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Features.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Logging.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Options.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\Microsoft.Extensions.Primitives.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Buffers.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.IO.Pipelines.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Memory.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Text.Json.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Threading.Channels.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\bin\Debug\System.ValueTuple.xml
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock RMM Remote Agent (Windows).csproj.AssemblyReference.cache
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock_RMM_Remote_Agent__Windows.ProjectInstaller.resources
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock RMM Remote Agent (Windows).csproj.GenerateResource.cache
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock RMM Remote Agent (Windows).csproj.CoreCompileInputs.cache
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock .6102A689.Up2Date
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock RMM Remote Agent (Windows).exe
+C:\Users\NicoMak\OneDrive - 0x101 Cyber Security\NetLock Root\NetLock-RMM-Remote-Agent-Windows\NetLock RMM Remote Agent (Windows)\obj\Debug\NetLock RMM Remote Agent (Windows).pdb

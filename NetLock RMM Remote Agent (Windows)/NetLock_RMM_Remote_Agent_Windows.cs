@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System.Threading;
 using System.Net.Sockets;
 using System.Text.Json;
+using NetLock_RMM_Remote_Agent_Windows.Helper;
 
 namespace NetLock_RMM_Remote_Agent_Windows
 {
@@ -47,7 +48,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
             await Local_Server_Connect();
 
             // Start the timer to check remote_server_client status every minute
-            remote_server_clientCheckTimer = new Timer(async (e) => await Local_Server_Check_Connection_Status(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            remote_server_clientCheckTimer = new Timer(async (e) => await Local_Server_Check_Connection_Status(), null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
         }
 
         protected override void OnStop()
@@ -149,7 +150,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
                     else if (!String.IsNullOrEmpty(device_identity) && remote_server_client.State == HubConnectionState.Disconnected) // If the device identity is not empty and the remote_server_client is disconnected, reconnect
                         await Remote_Connect();
                     else if (!String.IsNullOrEmpty(device_identity) && remote_server_client.State == HubConnectionState.Connected) // If the device identity is not empty and the remote_server_client is connected, do nothing
-                        Logging.Handler.Debug("Service.Check_Connection_Status", "Remote server connection is active.", "");
+                        Logging.Handler.Debug("Service.Check_Connection_Status", "Remote server connection is already active.", "");
                 }
                 else
                 {
@@ -188,7 +189,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
                 remote_server_client.On<string>("ReceiveMessage", async (command) =>
                 {
-                    Logging.Handler.Debug("Service.Setup_SignalR", "Received command", command);
+                    Logging.Handler.Debug("Service.Setup_SignalR", "ReceiveMessage", command);
 
                     // Insert the logic here to execute the command
                     
@@ -197,15 +198,58 @@ namespace NetLock_RMM_Remote_Agent_Windows
                         await Local_Server_Send_Message("sync");
                 });
 
+                // Receive a message from the remote server, process the command and send a response back to the remote server
                 remote_server_client.On<string>("SendMessageToClientAndWaitForResponse", async (command) =>
                 {
-                    Logging.Handler.Debug("Service.Setup_SignalR", "Received command", command);
+                    Logging.Handler.Debug("Service.Setup_SignalR", "SendMessageToClientAndWaitForResponse", command);
 
                     // Insert the logic here to execute the command
+                    // Deserialisation of the entire JSON string
 
-                    // Example: If the command is "sync", send a message to the local server to force a sync with the remote server
-                    if (command == "sync")
-                        await Local_Server_Send_Message("sync");
+                    int type = 0;
+                    bool wait_response = false;
+                    string powershell_code = String.Empty;
+                    string response_id = String.Empty;
+
+                    using (JsonDocument document = JsonDocument.Parse(command))
+                    {
+                        // type 
+                        JsonElement type_element = document.RootElement.GetProperty("type");
+                        type = Convert.ToInt32(type_element.ToString());
+
+                        // wait_response
+                        JsonElement wait_response_element = document.RootElement.GetProperty("wait_response");
+                        wait_response = Convert.ToBoolean(wait_response_element.ToString());
+
+                        // powershell_code
+                        JsonElement powershell_code_element = document.RootElement.GetProperty("powershell_code");
+                        powershell_code = powershell_code_element.ToString();
+
+                        // response_id
+                        if (wait_response)
+                        {
+                            JsonElement response_id_element = document.RootElement.GetProperty("response_id");
+                            response_id = response_id_element.GetString();
+                        }
+                    }
+
+                    // Example: If the type is 0, execute the powershell code and send the response back to the remote server if wait_response is true
+
+                    string result = string.Empty;
+
+                    if (type == 0)
+                    {
+                        result = PowerShell.Execute_Script(type.ToString(), powershell_code);
+                        Logging.Handler.Debug("Client", "PowerShell executed", result);
+
+                        // Send the response back to the server
+                        if (wait_response)
+                        {
+                            Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
+                            await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
+                            Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
+                        }
+                    }
                 });
 
                 // Start the connection

@@ -25,6 +25,10 @@ namespace NetLock_RMM_Remote_Agent_Windows.Initialization
                 // Logs
                 if (!Directory.Exists(Application_Paths.program_data_logs))
                     Directory.CreateDirectory(Application_Paths.program_data_logs);
+
+                // Scripts
+                if (!Directory.Exists(Application_Paths.program_data_scripts))
+                    Directory.CreateDirectory(Application_Paths.program_data_scripts);
             }
             catch (Exception ex)
             {
