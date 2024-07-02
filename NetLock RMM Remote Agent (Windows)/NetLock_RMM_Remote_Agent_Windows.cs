@@ -12,12 +12,14 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Text.Json;
 using NetLock_RMM_Remote_Agent_Windows.Helper;
+using System.IO;
+using System.CodeDom;
 
 namespace NetLock_RMM_Remote_Agent_Windows
 {
     public partial class Service : ServiceBase
     {
-        public static bool debug_mode = true;
+        public static bool debug_mode = false;
 
         // Local Server
         private const int Port = 5000;
@@ -210,6 +212,9 @@ namespace NetLock_RMM_Remote_Agent_Windows
                     bool wait_response = false;
                     string powershell_code = String.Empty;
                     string response_id = String.Empty;
+                    int file_browser_command = 0;
+                    string file_browser_path = String.Empty ;
+                    string file_browser_file_path = String.Empty ;
 
                     using (JsonDocument document = JsonDocument.Parse(command))
                     {
@@ -225,6 +230,18 @@ namespace NetLock_RMM_Remote_Agent_Windows
                         JsonElement powershell_code_element = document.RootElement.GetProperty("powershell_code");
                         powershell_code = powershell_code_element.ToString();
 
+                        // file_browser_command
+                        JsonElement file_browser_command_element = document.RootElement.GetProperty("file_browser_command");
+                        file_browser_command = Convert.ToInt32(file_browser_command_element.ToString());
+
+                        // file_browser_path
+                        JsonElement file_browser_path_element = document.RootElement.GetProperty("file_browser_path");
+                        file_browser_path = file_browser_path_element.ToString();
+
+                        // file_browser_file_path
+                        JsonElement file_browser_file_path_element = document.RootElement.GetProperty("file_browser_file_path");
+                        file_browser_file_path = file_browser_file_path_element.ToString();
+
                         // response_id
                         if (wait_response)
                         {
@@ -237,18 +254,59 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
                     string result = string.Empty;
 
-                    if (type == 0)
+                    if (type == 0) // Remote Shell
                     {
                         result = PowerShell.Execute_Script(type.ToString(), powershell_code);
                         Logging.Handler.Debug("Client", "PowerShell executed", result);
 
-                        // Send the response back to the server
-                        if (wait_response)
+                        // Send the response back to the server || Depreceated cause it always makes sense to wait for a response tho
+                        /*if (wait_response)
                         {
                             Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
                             await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
                             Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
+                        }*/
+                    }
+                    else if (type == 1) // File Browser
+                    {
+                        // 0 = get drives, 1 = index, 2 = create dir, 3 = delete dir, 4 = move dir, 5 = rename dir, 6 = create file, 7 = delete file, 8 = move file, 9 = rename file
+
+                        // File Browser Command
+                        try
+                        {
+                            if (file_browser_command == 0) // Get drives
+                            {
+                                result = IO.Get_Drives();
+                            }
+                            if (file_browser_command == 1) // index
+                            {
+                                // Get all directories and files in the specified path, create a json including date, size and file type
+                                var directoryDetails = IO.Get_Directory_Index(file_browser_path);
+                                result = JsonSerializer.Serialize(directoryDetails, new JsonSerializerOptions { WriteIndented = true });
+                            }
+                            else if (file_browser_command == 1) // delete dir
+                            {
+
+                            }
+                            else if (file_browser_command == 2) // move dir
+                            {
+
+                            }
                         }
+                        catch (Exception ex)
+                        {
+                            result = ex.Message;
+                            Logging.Handler.Error("Service.Setup_SignalR", "Failed to execute file browser command.", ex.ToString());
+                        }
+
+                    }
+
+                    // Send the response back to the server
+                    if (!String.IsNullOrEmpty(type.ToString()))
+                    {
+                        Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
+                        await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
+                        Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
                     }
                 });
 
