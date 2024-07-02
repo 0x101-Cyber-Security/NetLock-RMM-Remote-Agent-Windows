@@ -214,7 +214,8 @@ namespace NetLock_RMM_Remote_Agent_Windows
                     string response_id = String.Empty;
                     int file_browser_command = 0;
                     string file_browser_path = String.Empty ;
-                    string file_browser_file_path = String.Empty ;
+                    string file_browser_path_move = String.Empty ;
+                    string file_browser_file_content = String.Empty ;
 
                     using (JsonDocument document = JsonDocument.Parse(command))
                     {
@@ -238,9 +239,13 @@ namespace NetLock_RMM_Remote_Agent_Windows
                         JsonElement file_browser_path_element = document.RootElement.GetProperty("file_browser_path");
                         file_browser_path = file_browser_path_element.ToString();
 
-                        // file_browser_file_path
-                        JsonElement file_browser_file_path_element = document.RootElement.GetProperty("file_browser_file_path");
-                        file_browser_file_path = file_browser_file_path_element.ToString();
+                        // file_browser_path_move
+                        JsonElement file_browser_path_move_element = document.RootElement.GetProperty("file_browser_path_move");
+                        file_browser_path_move = file_browser_path_move_element.ToString();
+
+                        // file_browser_file_content
+                        JsonElement file_browser_file_content_element = document.RootElement.GetProperty("file_browser_file_content");
+                        file_browser_file_content = file_browser_file_content_element.ToString();
 
                         // response_id
                         if (wait_response)
@@ -284,13 +289,25 @@ namespace NetLock_RMM_Remote_Agent_Windows
                                 var directoryDetails = IO.Get_Directory_Index(file_browser_path);
                                 result = JsonSerializer.Serialize(directoryDetails, new JsonSerializerOptions { WriteIndented = true });
                             }
-                            else if (file_browser_command == 1) // delete dir
+                            else if (file_browser_command == 2) // create dir
                             {
-
+                                result = IO.Create_Directory(file_browser_path);
                             }
-                            else if (file_browser_command == 2) // move dir
+                            else if (file_browser_command == 3) // delete dir
                             {
-
+                                result = IO.Delete_Directory(file_browser_path).ToString();
+                            }
+                            else if (file_browser_command == 4) // move dir
+                            {
+                                result = IO.Move_Directory(file_browser_path, file_browser_path_move);
+                            }
+                            else if (file_browser_command == 5) // rename dir
+                            {
+                                result = IO.Rename_Directory(file_browser_path, file_browser_path_move);
+                            }
+                            else if (file_browser_command == 6) // create file
+                            {
+                                result = await IO.Create_File(file_browser_path, file_browser_file_content);
                             }
                         }
                         catch (Exception ex)
