@@ -309,6 +309,18 @@ namespace NetLock_RMM_Remote_Agent_Windows
                             {
                                 result = await IO.Create_File(file_browser_path, file_browser_file_content);
                             }
+                            else if (file_browser_command == 7) // delete file
+                            {
+                                result = IO.Delete_File(file_browser_path).ToString();
+                            }
+                            else if (file_browser_command == 8) // move file
+                            {
+                                result = IO.Move_File(file_browser_path, file_browser_path_move);
+                            }
+                            else if (file_browser_command == 9) // rename file
+                            {
+                                result = IO.Rename_File(file_browser_path, file_browser_path_move);
+                            }
                         }
                         catch (Exception ex)
                         {

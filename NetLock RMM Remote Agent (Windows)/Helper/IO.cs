@@ -389,5 +389,64 @@ namespace NetLock_RMM_Remote_Agent_Windows.Helper
             }
         }
 
+        // Move file and return true if successful
+        public static string Move_File(string source_path, string destination_path)
+        {
+            try
+            {
+                // Check if the source file exists
+                if (File.Exists(source_path))
+                {
+                    // Check if the destination directory exists
+                    if (!Directory.Exists(Path.GetDirectoryName(destination_path)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(destination_path));
+
+                    // Move the file
+                    File.Move(source_path, destination_path);
+
+                    return destination_path;
+                }
+
+                return "The source file does not exist.";
+            }
+            catch (Exception ex)
+            {
+                Logging.Handler.Error("IO.Move_File", "General error", ex.ToString());
+                return ex.Message;
+            }
+        }
+
+        // Rename file and return true if successful
+        public static string Rename_File(string sourceFilePath, string newFileName)
+        {
+            try
+            {
+                if (File.Exists(sourceFilePath))
+                {
+                    string parentDirectory = Path.GetDirectoryName(sourceFilePath);
+                    string destFilePath = Path.Combine(parentDirectory, newFileName);
+
+                    // Überprüfen, ob der neue Dateiname bereits existiert
+                    if (File.Exists(destFilePath))
+                    {
+                        return "A file with the same name already exists.";
+                    }
+
+                    File.Move(sourceFilePath, destFilePath);
+
+                    return destFilePath;
+                }
+                else
+                {
+                    return "The source file does not exist.";
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Handler.Error("IO.Rename_File", "General error", ex.ToString());
+                return ex.Message;
+            }
+        }
+
     }
 }
