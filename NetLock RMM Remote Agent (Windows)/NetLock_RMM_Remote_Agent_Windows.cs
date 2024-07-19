@@ -22,13 +22,15 @@ namespace NetLock_RMM_Remote_Agent_Windows
         public static bool debug_mode = false;
 
         // Local Server
-        private const int Port = 5000;
+        private const int Port = 7337;
         private const string ServerIp = "127.0.0.1"; // Localhost
         private TcpClient local_server_client;
         private NetworkStream _stream;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         // Remote Server
+        string remote_ssl = String.Empty;
+        string remote_server_url = String.Empty;
         private HubConnection remote_server_client;
         private Timer remote_server_clientCheckTimer;
         bool remote_server_client_setup = false;
@@ -101,11 +103,17 @@ namespace NetLock_RMM_Remote_Agent_Windows
                     if (messageParts[0].ToString() == "device_identity")
                     {
                         Logging.Handler.Debug("Service.Local_Server_Handle_Server_Messages", "Device identity received", messageParts[1]);
-                        
+
                         if (String.IsNullOrEmpty(messageParts[1]))
                             Logging.Handler.Error("Service.Local_Server_Handle_Server_Messages", "Device identity is empty or not ready yet.", "");
                         else
+                        {
                             device_identity = messageParts[1];
+                            remote_server_url = $"{messageParts[2]}/commandHub";
+
+                            Logging.Handler.Debug("Service.Local_Server_Handle_Server_Messages", "Device identity", device_identity);
+                            Logging.Handler.Debug("Service.Local_Server_Handle_Server_Messages", "Remote server URL", remote_server_url);
+                        }
                     }
                 }
             }
@@ -183,7 +191,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
                 Logging.Handler.Debug("Service.Setup_SignalR", "Device identity JSON", device_identity);
 
                 remote_server_client = new HubConnectionBuilder()
-                    .WithUrl("http://localhost:7173/commandHub", options =>
+                    .WithUrl(remote_server_url, options =>
                     {
                         options.Headers.Add("Device-Identity", Uri.EscapeDataString(device_identity));
                     })

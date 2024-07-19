@@ -3,11 +3,23 @@
   "WorkspaceRootPath": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|c:\\users\\nicomak\\onedrive - 0x101 cyber security\\netlock root\\netlock-rmm-remote-agent-windows\\netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|c:\\users\\nicomak\\onedrive - 0x101 cyber security\\netlock root\\netlock-rmm-remote-agent-windows\\netlock rmm remote agent (windows)\\helper\\io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\helper\\logging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\logging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\application_paths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\application_paths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\helper\\io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -15,16 +27,8 @@
       "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\encryption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\helper\\logging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\logging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\helper\\powershell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\initialization\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\initialization\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\application_paths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\application_paths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -61,7 +61,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -69,19 +69,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Encryption.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-02T13:22:17.444Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "IO.cs",
               "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\IO.cs",
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\IO.cs",
@@ -89,8 +77,7 @@
               "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\IO.cs",
               "ViewState": "AQIAAIwBAAAAAAAAAAAjwL0BAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-01T13:52:17.467Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-01T13:52:17.467Z"
             },
             {
               "$type": "Document",
@@ -102,20 +89,20 @@
               "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.Designer.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.098Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-19T11:42:44.098Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "Logging.cs",
               "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Logging.cs",
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\Logging.cs",
               "ToolTip": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Logging.cs",
               "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\Logging.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAewBkAAAAmAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.121Z"
+              "WhenOpened": "2024-06-19T11:42:44.121Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -130,7 +117,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Program.cs",
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Program.cs",
@@ -138,11 +125,12 @@
               "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.123Z"
+              "WhenOpened": "2024-06-19T11:42:44.123Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Health.cs",
               "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Initialization\\Health.cs",
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Initialization\\Health.cs",
@@ -154,7 +142,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "PowerShell.cs",
               "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\PowerShell.cs",
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\PowerShell.cs",
@@ -178,13 +166,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 3,
               "Title": "Application_Paths.cs",
               "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Application_Paths.cs",
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Application_Paths.cs",
               "ToolTip": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Application_Paths.cs",
               "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Application_Paths.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAABqAAAA",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAAAAsAAABvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-19T11:42:44.126Z"
             },
@@ -196,10 +184,22 @@
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
               "ToolTip": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
               "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
-              "ViewState": "AQIAAAwBAAAAAAAAAAAswDsBAABAAAAA",
+              "ViewState": "AQIAAEcAAAAAAAAAAAAIwGkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-19T11:42:44.205Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Encryption.cs",
+              "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
+              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
+              "ToolTip": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
+              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-02T13:22:17.444Z"
             },
             {
               "$type": "Document",
@@ -214,15 +214,14 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "NetLock_RMM_Remote_Agent_Windows.cs [Entwurf]",
               "DocumentMoniker": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
               "ToolTip": "C:\\Users\\NicoMak\\OneDrive - 0x101 Cyber Security\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs [Entwurf]",
               "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs [Entwurf]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.238Z",
-              "EditorCaption": " [Entwurf]"
+              "WhenOpened": "2024-06-19T11:42:44.238Z"
             }
           ]
         }
