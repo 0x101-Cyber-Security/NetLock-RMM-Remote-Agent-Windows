@@ -294,7 +294,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
                             if (file_browser_command == 1) // index
                             {
                                 // Get all directories and files in the specified path, create a json including date, size and file type
-                                var directoryDetails = IO.Get_Directory_Index(file_browser_path).GetAwaiter().GetResult();
+                                var directoryDetails = IO.Get_Directory_Index(file_browser_path);
                                 result = JsonSerializer.Serialize(directoryDetails, new JsonSerializerOptions { WriteIndented = true });
                             }
                             else if (file_browser_command == 2) // create dir
