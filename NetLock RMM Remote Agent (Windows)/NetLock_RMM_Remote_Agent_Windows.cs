@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System.Threading;
 using System.Net.Sockets;
 using System.Text.Json;
-using NetLock_RMM_Remote_Agent_Windows.Helper;
 using System.IO;
 using System.CodeDom;
+using System.Xml.Linq;
 
 namespace NetLock_RMM_Remote_Agent_Windows
 {
@@ -29,7 +29,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         // Remote Server
-        string remote_ssl = String.Empty;
+        bool ssl = false;
         string remote_server_url = String.Empty;
         private HubConnection remote_server_client;
         private Timer remote_server_clientCheckTimer;
@@ -37,6 +37,44 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
         // Device Identity
         public string device_identity = String.Empty;
+        public static string package_guid = String.Empty;
+
+        public class Device_Identity
+        {
+            public string agent_version { get; set; }
+            public string package_guid { get; set; }
+            public string device_name { get; set; }
+            public string location_guid { get; set; }
+            public string tenant_guid { get; set; }
+            public string access_key { get; set; }
+            public string hwid { get; set; }
+            public string ip_address_internal { get; set; }
+            public string operating_system { get; set; }
+            public string domain { get; set; }
+            public string antivirus_solution { get; set; }
+            public string firewall_status { get; set; }
+            public string architecture { get; set; }
+            public string last_boot { get; set; }
+            public string timezone { get; set; }
+            public string cpu { get; set; }
+            public string mainboard { get; set; }
+            public string gpu { get; set; }
+            public string ram { get; set; }
+            public string tpm { get; set; }
+        }
+
+        public class Command_Entity
+        {
+            public int type { get; set; }
+            public bool wait_response { get; set; }
+            public string powershell_code { get; set; }
+            public string response_id { get; set; }
+            public int file_browser_command { get; set; }
+            public string file_browser_path { get; set; }
+            public string file_browser_path_move { get; set; }
+            public string file_browser_file_content { get; set; }
+            public string file_browser_file_guid { get; set; }
+        }
 
         public Service()
         {
@@ -190,169 +228,169 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
                 Logging.Handler.Debug("Service.Setup_SignalR", "Device identity JSON", device_identity);
 
-                remote_server_client = new HubConnectionBuilder()
+                // Parse the JSON
+                using (JsonDocument document = JsonDocument.Parse(device_identity))
+                {
+                    // Get package_guid
+                    try
+                    {
+                        // Get ssl
+                        JsonElement ssl_element = document.RootElement.GetProperty("ssl");
+                        ssl = ssl_element.GetBoolean();
+                        Logging.Handler.Debug("Server_Config_Handler", "Server_Config_Handler.Load (ssl)", ssl.ToString());
+
+                        JsonElement package_guid_element = document.RootElement.GetProperty("package_guid");
+                        Service.package_guid = package_guid_element.ToString();
+                        Logging.Handler.Debug("Server_Config_Handler", "Server_Config_Handler.Load (package_guid)", Service.package_guid);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logging.Handler.Error("Server_Config_Handler", "Server_Config_Handler.Load (package_guid) - Parsing", ex.ToString());
+                    }
+
+                    remote_server_client = new HubConnectionBuilder()
                     .WithUrl(remote_server_url, options =>
                     {
                         options.Headers.Add("Device-Identity", Uri.EscapeDataString(device_identity));
                     })
                     .Build();
 
-                remote_server_client.On<string>("ReceiveMessage", async (command) =>
-                {
-                    Logging.Handler.Debug("Service.Setup_SignalR", "ReceiveMessage", command);
-
-                    // Insert the logic here to execute the command
-                    
-                    // Example: If the command is "sync", send a message to the local server to force a sync with the remote server
-                    if (command == "sync")
-                        await Local_Server_Send_Message("sync");
-                });
-
-                // Receive a message from the remote server, process the command and send a response back to the remote server
-                remote_server_client.On<string>("SendMessageToClientAndWaitForResponse", async (command) =>
-                {
-                    Logging.Handler.Debug("Service.Setup_SignalR", "SendMessageToClientAndWaitForResponse", command);
-
-                    // Insert the logic here to execute the command
-                    // Deserialisation of the entire JSON string
-
-                    int type = 0;
-                    bool wait_response = false;
-                    string powershell_code = String.Empty;
-                    string response_id = String.Empty;
-                    int file_browser_command = 0;
-                    string file_browser_path = String.Empty ;
-                    string file_browser_path_move = String.Empty ;
-                    string file_browser_file_content = String.Empty ;
-
-                    using (JsonDocument document = JsonDocument.Parse(command))
+                    remote_server_client.On<string>("ReceiveMessage", async (command) =>
                     {
-                        // type 
-                        JsonElement type_element = document.RootElement.GetProperty("type");
-                        type = Convert.ToInt32(type_element.ToString());
+                        Logging.Handler.Debug("Service.Setup_SignalR", "ReceiveMessage", command);
 
-                        // wait_response
-                        JsonElement wait_response_element = document.RootElement.GetProperty("wait_response");
-                        wait_response = Convert.ToBoolean(wait_response_element.ToString());
+                        // Insert the logic here to execute the command
 
-                        // powershell_code
-                        JsonElement powershell_code_element = document.RootElement.GetProperty("powershell_code");
-                        powershell_code = powershell_code_element.ToString();
+                        // Example: If the command is "sync", send a message to the local server to force a sync with the remote server
+                        if (command == "sync")
+                            await Local_Server_Send_Message("sync");
+                    });
 
-                        // file_browser_command
-                        JsonElement file_browser_command_element = document.RootElement.GetProperty("file_browser_command");
-                        file_browser_command = Convert.ToInt32(file_browser_command_element.ToString());
+                    // Receive a message from the remote server, process the command and send a response back to the remote server
+                    remote_server_client.On<string>("SendMessageToClientAndWaitForResponse", async (command) =>
+                    {
+                        Logging.Handler.Debug("Service.Setup_SignalR", "SendMessageToClientAndWaitForResponse", command);
 
-                        // file_browser_path
-                        JsonElement file_browser_path_element = document.RootElement.GetProperty("file_browser_path");
-                        file_browser_path = file_browser_path_element.ToString();
+                        // Deserialisation of the entire JSON string
+                        Command_Entity command_object = JsonSerializer.Deserialize<Command_Entity>(command);
+                        // Example: If the type is 0, execute the powershell code and send the response back to the remote server if wait_response is true
 
-                        // file_browser_path_move
-                        JsonElement file_browser_path_move_element = document.RootElement.GetProperty("file_browser_path_move");
-                        file_browser_path_move = file_browser_path_move_element.ToString();
+                        string result = string.Empty;
 
-                        // file_browser_file_content
-                        JsonElement file_browser_file_content_element = document.RootElement.GetProperty("file_browser_file_content");
-                        file_browser_file_content = file_browser_file_content_element.ToString();
-
-                        // response_id
-                        if (wait_response)
+                        if (command_object.type == 0) // Remote Shell
                         {
-                            JsonElement response_id_element = document.RootElement.GetProperty("response_id");
-                            response_id = response_id_element.GetString();
+                            result = Helper.PowerShell.Execute_Script(command_object.type.ToString(), command_object.powershell_code);
+                            Logging.Handler.Debug("Client", "PowerShell executed", result);
+
+                            // Send the response back to the server || Depreceated cause it always makes sense to wait for a response tho
+                            /*if (wait_response)
+                            {
+                                Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
+                                await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
+                                Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
+                            }*/
                         }
-                    }
-
-                    // Example: If the type is 0, execute the powershell code and send the response back to the remote server if wait_response is true
-
-                    string result = string.Empty;
-
-                    if (type == 0) // Remote Shell
-                    {
-                        result = PowerShell.Execute_Script(type.ToString(), powershell_code);
-                        Logging.Handler.Debug("Client", "PowerShell executed", result);
-
-                        // Send the response back to the server || Depreceated cause it always makes sense to wait for a response tho
-                        /*if (wait_response)
+                        else if (command_object.type == 1) // File Browser
                         {
-                            Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
-                            await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
-                            Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
-                        }*/
-                    }
-                    else if (type == 1) // File Browser
-                    {
-                        // 0 = get drives, 1 = index, 2 = create dir, 3 = delete dir, 4 = move dir, 5 = rename dir, 6 = create file, 7 = delete file, 8 = move file, 9 = rename file
+                            // 0 = get drives, 1 = index, 2 = create dir, 3 = delete dir, 4 = move dir, 5 = rename dir, 6 = create file, 7 = delete file, 8 = move file, 9 = rename file, 10 = download file, 11 = upload file
 
-                        // File Browser Command
-                        try
-                        {
-                            if (file_browser_command == 0) // Get drives
+                            // File Browser Command
+                            try
                             {
-                                result = IO.Get_Drives();
+                                if (command_object.file_browser_command == 0) // Get drives
+                                {
+                                    result = Helper.IO.Get_Drives();
+                                }
+                                if (command_object.file_browser_command == 1) // index
+                                {
+                                    // Get all directories and files in the specified path, create a json including date, size and file type
+                                    var directoryDetails = Helper.IO.Get_Directory_Index(command_object.file_browser_path);
+                                    result = JsonSerializer.Serialize(directoryDetails, new JsonSerializerOptions { WriteIndented = true });
+                                }
+                                else if (command_object.file_browser_command == 2) // create dir
+                                {
+                                    result = Helper.IO.Create_Directory(command_object.file_browser_path);
+                                }
+                                else if (command_object.file_browser_command == 3) // delete dir
+                                {
+                                    result = Helper.IO.Delete_Directory(command_object.file_browser_path).ToString();
+                                }
+                                else if (command_object.file_browser_command == 4) // move dir
+                                {
+                                    result = Helper.IO.Move_Directory(command_object.file_browser_path, command_object.file_browser_path_move);
+                                }
+                                else if (command_object.file_browser_command == 5) // rename dir
+                                {
+                                    result = Helper.IO.Rename_Directory(command_object.file_browser_path, command_object.file_browser_path_move);
+                                }
+                                else if (command_object.file_browser_command == 6) // create file
+                                {
+                                    result = await Helper.IO.Create_File(command_object.file_browser_path, command_object.file_browser_file_content);
+                                }
+                                else if (command_object.file_browser_command == 7) // delete file
+                                {
+                                    result = Helper.IO.Delete_File(command_object.file_browser_path).ToString();
+                                }
+                                else if (command_object.file_browser_command == 8) // move file
+                                {
+                                    result = Helper.IO.Move_File(command_object.file_browser_path, command_object.file_browser_path_move);
+                                }
+                                else if (command_object.file_browser_command == 9) // rename file
+                                {
+                                    result = Helper.IO.Rename_File(command_object.file_browser_path, command_object.file_browser_path_move);
+                                }
+                                else if (command_object.file_browser_command == 10) // download file
+                                {
+                                    // Deserialise device identity
+                                    var jsonDocument = JsonDocument.Parse(device_identity);
+                                    var deviceIdentityElement = jsonDocument.RootElement.GetProperty("device_identity");
+
+                                    Device_Identity device_identity_object = JsonSerializer.Deserialize<Device_Identity>(deviceIdentityElement.ToString());
+
+                                    // download url with tenant guid, location guid & device name
+                                    string download_url = "localhost:7080/admin/files/download/device" + "?guid=" + command_object.file_browser_file_guid + "&tenant_guid=" + device_identity_object.tenant_guid + "&location_guid=" + device_identity_object.location_guid + "&device_name=" + device_identity_object.device_name + "&access_key=" + device_identity_object.access_key + "&hwid=" + device_identity_object.hwid;
+
+                                    Logging.Handler.Debug("Service.Setup_SignalR", "Download URL", download_url);
+                                    await Helper.Http.DownloadFileAsync(ssl, download_url, "C:\\test.exe", device_identity_object.package_guid);
+
+                                    // remote file path continue
+
+
+                                    //result = await Helper.Http.DownloadFileAsync(ssl, command_object.file_browser_download_url, command_object.file_browser_path, Service.package_guid);
+
+                                    result = "File downloaded.";
+
+                                    Logging.Handler.Debug("Service.Setup_SignalR", "File downloaded", result);
+                                }
+                                else if (command_object.file_browser_command == 11) // upload file
+                                {
+                                    //result = Helper.IO.Upload_File(file_browser_path, file_browser_file_content);
+                                }
                             }
-                            if (file_browser_command == 1) // index
+                            catch (Exception ex)
                             {
-                                // Get all directories and files in the specified path, create a json including date, size and file type
-                                var directoryDetails = IO.Get_Directory_Index(file_browser_path);
-                                result = JsonSerializer.Serialize(directoryDetails, new JsonSerializerOptions { WriteIndented = true });
+                                result = ex.Message;
+                                Logging.Handler.Error("Service.Setup_SignalR", "Failed to execute file browser command.", ex.ToString());
                             }
-                            else if (file_browser_command == 2) // create dir
-                            {
-                                result = IO.Create_Directory(file_browser_path);
-                            }
-                            else if (file_browser_command == 3) // delete dir
-                            {
-                                result = IO.Delete_Directory(file_browser_path).ToString();
-                            }
-                            else if (file_browser_command == 4) // move dir
-                            {
-                                result = IO.Move_Directory(file_browser_path, file_browser_path_move);
-                            }
-                            else if (file_browser_command == 5) // rename dir
-                            {
-                                result = IO.Rename_Directory(file_browser_path, file_browser_path_move);
-                            }
-                            else if (file_browser_command == 6) // create file
-                            {
-                                result = await IO.Create_File(file_browser_path, file_browser_file_content);
-                            }
-                            else if (file_browser_command == 7) // delete file
-                            {
-                                result = IO.Delete_File(file_browser_path).ToString();
-                            }
-                            else if (file_browser_command == 8) // move file
-                            {
-                                result = IO.Move_File(file_browser_path, file_browser_path_move);
-                            }
-                            else if (file_browser_command == 9) // rename file
-                            {
-                                result = IO.Rename_File(file_browser_path, file_browser_path_move);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            result = ex.Message;
-                            Logging.Handler.Error("Service.Setup_SignalR", "Failed to execute file browser command.", ex.ToString());
+
                         }
 
-                    }
+                        // Send the response back to the server
+                        if (!String.IsNullOrEmpty(command_object.type.ToString()))
+                        {
+                            Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + command_object.response_id);
+                            await remote_server_client.InvokeAsync("ReceiveClientResponse", command_object.response_id, result);
+                            Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + command_object.response_id);
+                        }
+                    });
 
-                    // Send the response back to the server
-                    if (!String.IsNullOrEmpty(type.ToString()))
-                    {
-                        Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
-                        await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
-                        Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
-                    }
-                });
+                    // Start the connection
+                    await remote_server_client.StartAsync();
 
-                // Start the connection
-                await remote_server_client.StartAsync();
+                    remote_server_client_setup = true;
 
-                remote_server_client_setup = true;
-
-                Logging.Handler.Debug("Service.Setup_SignalR", "Connected to the remote server.", "");
+                    Logging.Handler.Debug("Service.Setup_SignalR", "Connected to the remote server.", "");
+                }
             }
             catch (Exception ex)
             {

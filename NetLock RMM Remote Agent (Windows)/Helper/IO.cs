@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using static NetLock_RMM_Remote_Agent_Windows.Service;
 
-namespace NetLock_RMM_Remote_Agent_Windows.Helper
+namespace Helper
 {
     internal class IO
     {

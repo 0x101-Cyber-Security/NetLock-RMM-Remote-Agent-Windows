@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using NetLock_RMM_Remote_Agent_Windows.Initialization;
 
-namespace NetLock_RMM_Remote_Agent_Windows.Helper
+namespace Helper
 {
     internal class PowerShell
     {
@@ -52,7 +52,7 @@ namespace NetLock_RMM_Remote_Agent_Windows.Helper
                 Random random = new Random();
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 string random_id = new string(Enumerable.Repeat(chars, 12).Select(s => s[random.Next(s.Length)]).ToArray());
-                string path = Application_Paths.program_data_scripts + @"\" + Randomizer.Handler.Standard(12) + ".ps1";
+                string path = NetLock_RMM_Remote_Agent_Windows.Application_Paths.program_data_scripts + @"\" + Randomizer.Handler.Standard(12) + ".ps1";
 
                 //Decode script
                 byte[] script_data = Convert.FromBase64String(script);
