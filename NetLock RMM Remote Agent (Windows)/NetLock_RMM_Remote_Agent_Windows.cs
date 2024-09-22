@@ -29,7 +29,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         // Remote Server
-        bool ssl = false;
         string remote_server_url = String.Empty;
         private HubConnection remote_server_client;
         private Timer remote_server_clientCheckTimer;
@@ -37,10 +36,10 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
         // Device Identity
         public string device_identity = String.Empty;
-        public static string package_guid = String.Empty;
 
         public class Device_Identity
         {
+            public bool ssl { get; set; }
             public string agent_version { get; set; }
             public string package_guid { get; set; }
             public string device_name { get; set; }
@@ -74,6 +73,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
             public string file_browser_path_move { get; set; }
             public string file_browser_file_content { get; set; }
             public string file_browser_file_guid { get; set; }
+            public string command { get; set; }
         }
 
         public Service()
@@ -231,22 +231,11 @@ namespace NetLock_RMM_Remote_Agent_Windows
                 // Parse the JSON
                 using (JsonDocument document = JsonDocument.Parse(device_identity))
                 {
-                    // Get package_guid
-                    try
-                    {
-                        // Get ssl
-                        JsonElement ssl_element = document.RootElement.GetProperty("ssl");
-                        ssl = ssl_element.GetBoolean();
-                        Logging.Handler.Debug("Server_Config_Handler", "Server_Config_Handler.Load (ssl)", ssl.ToString());
+                    // Deserialise device identity
+                    var jsonDocument = JsonDocument.Parse(device_identity);
+                    var deviceIdentityElement = jsonDocument.RootElement.GetProperty("device_identity");
 
-                        JsonElement package_guid_element = document.RootElement.GetProperty("package_guid");
-                        Service.package_guid = package_guid_element.ToString();
-                        Logging.Handler.Debug("Server_Config_Handler", "Server_Config_Handler.Load (package_guid)", Service.package_guid);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logging.Handler.Error("Server_Config_Handler", "Server_Config_Handler.Load (package_guid) - Parsing", ex.ToString());
-                    }
+                    Device_Identity device_identity_object = JsonSerializer.Deserialize<Device_Identity>(deviceIdentityElement.ToString());
 
                     remote_server_client = new HubConnectionBuilder()
                     .WithUrl(remote_server_url, options =>
@@ -304,7 +293,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
                                 if (command_object.file_browser_command == 1) // index
                                 {
                                     // Get all directories and files in the specified path, create a json including date, size and file type
-                                    var directoryDetails = Helper.IO.Get_Directory_Index(command_object.file_browser_path);
+                                    var directoryDetails = await Helper.IO.Get_Directory_Index(command_object.file_browser_path);
                                     result = JsonSerializer.Serialize(directoryDetails, new JsonSerializerOptions { WriteIndented = true });
                                 }
                                 else if (command_object.file_browser_command == 2) // create dir
@@ -341,30 +330,25 @@ namespace NetLock_RMM_Remote_Agent_Windows
                                 }
                                 else if (command_object.file_browser_command == 10) // download file
                                 {
-                                    // Deserialise device identity
-                                    var jsonDocument = JsonDocument.Parse(device_identity);
-                                    var deviceIdentityElement = jsonDocument.RootElement.GetProperty("device_identity");
-
-                                    Device_Identity device_identity_object = JsonSerializer.Deserialize<Device_Identity>(deviceIdentityElement.ToString());
-
                                     // download url with tenant guid, location guid & device name
                                     string download_url = "localhost:7080/admin/files/download/device" + "?guid=" + command_object.file_browser_file_guid + "&tenant_guid=" + device_identity_object.tenant_guid + "&location_guid=" + device_identity_object.location_guid + "&device_name=" + device_identity_object.device_name + "&access_key=" + device_identity_object.access_key + "&hwid=" + device_identity_object.hwid;
 
                                     Logging.Handler.Debug("Service.Setup_SignalR", "Download URL", download_url);
-                                    await Helper.Http.DownloadFileAsync(ssl, download_url, "C:\\test.exe", device_identity_object.package_guid);
-
-                                    // remote file path continue
-
-
-                                    //result = await Helper.Http.DownloadFileAsync(ssl, command_object.file_browser_download_url, command_object.file_browser_path, Service.package_guid);
-
-                                    result = "File downloaded.";
+                                    result = await Helper.Http.DownloadFileAsync(device_identity_object.ssl, download_url, command_object.file_browser_path, device_identity_object.package_guid);
 
                                     Logging.Handler.Debug("Service.Setup_SignalR", "File downloaded", result);
                                 }
                                 else if (command_object.file_browser_command == 11) // upload file
                                 {
-                                    //result = Helper.IO.Upload_File(file_browser_path, file_browser_file_content);
+                                    string file_name = Path.GetFileName(command_object.file_browser_path);
+
+                                    // upload url with tenant guid, location guid & device name
+                                    string upload_url = "localhost:7080/admin/files/upload/device" + "?tenant_guid=" + device_identity_object.tenant_guid + "&location_guid=" + device_identity_object.location_guid + "&device_name=" + device_identity_object.device_name + "&access_key=" + device_identity_object.access_key + "&hwid=" + device_identity_object.hwid;
+
+                                    Logging.Handler.Debug("Service.Setup_SignalR", "Upload URL", upload_url);
+
+                                    // Upload the file to the server
+                                    result = await Helper.Http.UploadFileAsync(device_identity_object.ssl, upload_url, command_object.file_browser_path, device_identity_object.package_guid);
                                 }
                             }
                             catch (Exception ex)
@@ -372,7 +356,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
                                 result = ex.Message;
                                 Logging.Handler.Error("Service.Setup_SignalR", "Failed to execute file browser command.", ex.ToString());
                             }
-
                         }
 
                         // Send the response back to the server
