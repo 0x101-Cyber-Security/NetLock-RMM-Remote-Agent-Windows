@@ -178,6 +178,8 @@
     <Compile Include="Application_Paths.cs" />
     <Compile Include="Helper\Http.cs" />
     <Compile Include="Helper\IO.cs" />
+    <Compile Include="Helper\Service.cs" />
+    <Compile Include="Helper\Task_Manager.cs" />
     <Compile Include="Initialization\Health.cs" />
     <Compile Include="Helper\Base64.cs" />
     <Compile Include="Helper\Encryption.cs" />

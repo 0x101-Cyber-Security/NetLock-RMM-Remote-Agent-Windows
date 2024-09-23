@@ -266,26 +266,19 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
                         string result = string.Empty;
 
-                        if (command_object.type == 0) // Remote Shell
+                        try
                         {
-                            result = Helper.PowerShell.Execute_Script(command_object.type.ToString(), command_object.powershell_code);
-                            Logging.Handler.Debug("Client", "PowerShell executed", result);
-
-                            // Send the response back to the server || Depreceated cause it always makes sense to wait for a response tho
-                            /*if (wait_response)
+                            if (command_object.type == 0) // Remote Shell
                             {
-                                Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
-                                await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
-                                Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
-                            }*/
-                        }
-                        else if (command_object.type == 1) // File Browser
-                        {
-                            // 0 = get drives, 1 = index, 2 = create dir, 3 = delete dir, 4 = move dir, 5 = rename dir, 6 = create file, 7 = delete file, 8 = move file, 9 = rename file, 10 = download file, 11 = upload file
-
-                            // File Browser Command
-                            try
+                                result = Helper.PowerShell.Execute_Script(command_object.type.ToString(), command_object.powershell_code);
+                                Logging.Handler.Debug("Client", "PowerShell executed", result);
+                            }
+                            else if (command_object.type == 1) // File Browser
                             {
+                                // 0 = get drives, 1 = index, 2 = create dir, 3 = delete dir, 4 = move dir, 5 = rename dir, 6 = create file, 7 = delete file, 8 = move file, 9 = rename file, 10 = download file, 11 = upload file
+
+                                // File Browser Command
+
                                 if (command_object.file_browser_command == 0) // Get drives
                                 {
                                     result = Helper.IO.Get_Drives();
@@ -351,11 +344,40 @@ namespace NetLock_RMM_Remote_Agent_Windows
                                     result = await Helper.Http.UploadFileAsync(device_identity_object.ssl, upload_url, command_object.file_browser_path, device_identity_object.package_guid);
                                 }
                             }
-                            catch (Exception ex)
+                            else if (command_object.type == 2) // Service
                             {
-                                result = ex.Message;
-                                Logging.Handler.Error("Service.Setup_SignalR", "Failed to execute file browser command.", ex.ToString());
+                                // Deserialise the command_object.command json, using json document (action, name)
+                                Logging.Handler.Debug("Service.Setup_SignalR", "Service command", command_object.command);
+
+                                string action = String.Empty;
+                                string name = String.Empty;
+
+                                using (JsonDocument doc = JsonDocument.Parse(command_object.command))
+                                {
+                                    JsonElement root = doc.RootElement;
+
+                                    // Access to the "action" field
+                                    action = root.GetProperty("action").GetString();
+
+                                    // Access to the "name" field
+                                    name = root.GetProperty("name").GetString();
+                                }
+
+                                // Execute
+                                result = await Helper.Service.Action(action, name);
+                                Logging.Handler.Debug("Service.Setup_SignalR", "Service Action", result);
                             }
+                            else if (command_object.type == 3) // Task Manager Action
+                            {
+                                // Terminate process by pid
+                                result = await Helper.Task_Manager.Terminate_Process_Tree(Convert.ToInt32(command_object.command));
+                                Logging.Handler.Debug("Service.Setup_SignalR", "Terminate Process", result);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            result = ex.Message;
+                            Logging.Handler.Error("Service.Setup_SignalR", "Failed to execute file browser command.", ex.ToString());
                         }
 
                         // Send the response back to the server
