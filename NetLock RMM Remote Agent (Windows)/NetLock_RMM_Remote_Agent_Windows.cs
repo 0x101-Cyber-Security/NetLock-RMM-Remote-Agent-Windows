@@ -14,6 +14,8 @@ using System.Text.Json;
 using System.IO;
 using System.CodeDom;
 using System.Xml.Linq;
+using System.Net;
+using System.Security.Principal;
 
 namespace NetLock_RMM_Remote_Agent_Windows
 {
@@ -73,7 +75,10 @@ namespace NetLock_RMM_Remote_Agent_Windows
             public string file_browser_path_move { get; set; }
             public string file_browser_file_content { get; set; }
             public string file_browser_file_guid { get; set; }
-            public string command { get; set; }
+            public string remote_control_username { get; set; }
+            public string remote_control_screen_index { get; set; }
+            public string remote_control_mouse_xyz { get; set; }
+            public string command { get; set; } // used for service, task manager, screen capture
         }
 
         public Service()
@@ -85,8 +90,9 @@ namespace NetLock_RMM_Remote_Agent_Windows
         {
             Logging.Handler.Debug("Service.OnStart", "Service started", "Information");
 
-            //_ = Task.Run(async () => await Local_Server_Connect());
+            _ = Task.Run(async () => await Local_Server_Start());
             
+            //await Local_Server_Start();
             await Local_Server_Connect();
 
             // Start the timer to check remote_server_client status every minute
@@ -373,6 +379,33 @@ namespace NetLock_RMM_Remote_Agent_Windows
                                 result = await Helper.Task_Manager.Terminate_Process_Tree(Convert.ToInt32(command_object.command));
                                 Logging.Handler.Debug("Service.Setup_SignalR", "Terminate Process", result);
                             }
+                            else if (command_object.type == 4) // Remote Control
+                            {
+                                Logging.Handler.Debug("Service.Setup_SignalR", "Remote Control command", command_object.command);
+
+                                if (command_object.command == "0") // Get image
+                                {
+                                   
+                                }
+
+                                //  Create the JSON object
+                                var jsonObject = new
+                                {
+                                    response_id = command_object.response_id,
+                                    type = command_object.command,
+                                    remote_control_screen_index = command_object.remote_control_screen_index,
+                                    remote_control_mouse_xyz = command_object.remote_control_mouse_xyz,
+                                };
+
+                                // Convert the object into a JSON string
+                                string json = JsonSerializer.Serialize(jsonObject, new JsonSerializerOptions { WriteIndented = true });
+                                Logging.Handler.Debug("Service.Setup_SignalR", "Remote Control json", json);
+
+                                await SendToClient(command_object.remote_control_username, json);
+
+                                // Return because no further action is required
+                                return;
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -425,6 +458,166 @@ namespace NetLock_RMM_Remote_Agent_Windows
                 Logging.Handler.Error("Service.Remote_Connect", "Failed to connect to the server.", ex.ToString());
             }
         }
+
+        #region Remote Agent Local Server
+
+        private const int Remote_Agent_Local_Port = 7338;
+        private Dictionary<string, TcpClient> _clients = new Dictionary<string, TcpClient>(); // Store clients by username
+        private TcpListener _listener;
+        private CancellationTokenSource _cancellationTokenSourceLocal = new CancellationTokenSource();
+
+        public async Task Local_Server_Start()
+        {
+            try
+            {
+                Logging.Handler.Debug("Service.Remote_Agent_Local_Server_Start", "Starting server...", "");
+                Console.WriteLine("Starting server...");
+                _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), Remote_Agent_Local_Port);
+                _listener.Start();
+                Console.WriteLine("Remote Agent Server started. Waiting for connections...");
+                Logging.Handler.Debug("Service.Remote_Agent_Local_Server_Start", "Server started. Waiting for connections...", "");
+
+                while (!_cancellationTokenSourceLocal.Token.IsCancellationRequested)
+                {
+                    var client = await _listener.AcceptTcpClientAsync();
+                    if (client != null)
+                    {
+                        _ = Local_Server_Handle_Client(client, _cancellationTokenSourceLocal.Token); // Handle each client in a separate task
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error starting server: {ex.Message}");
+                Logging.Handler.Error("Service.Remote_Agent_Local_Server_Start", "Error starting server.", ex.ToString());
+            }
+        }
+
+        private async Task Local_Server_Handle_Client(TcpClient client, CancellationToken cancellationToken)
+        {
+            NetworkStream stream = client.GetStream();
+            byte[] buffer = new byte[1024];
+
+            try
+            {
+                // Wait for the client to send the username first
+                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
+                string initialMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                string[] messageParts = initialMessage.Split('$');
+
+                if (messageParts[0] == "username")
+                {
+                    string username = messageParts[1];
+                    Console.WriteLine($"Client connected: {username}");
+                    Logging.Handler.Debug("Service.Remote_Agent_Local_Server_Handle_Client", "Client connected", username);
+
+                    // Add the client to the dictionary
+                    lock (_clients)
+                    {
+                        _clients[username] = client;
+                    }
+
+                    // Handle messages from the client
+                    await HandleClientMessages(username, client, stream, cancellationToken);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error handling client: {ex.Message}");
+                Logging.Handler.Error("Service.Remote_Agent_Local_Server_Handle_Client", "Error handling client.", ex.ToString());
+            }
+        }
+
+        private async Task HandleClientMessages(string username, TcpClient client, NetworkStream stream, CancellationToken cancellationToken)
+        {
+            byte[] buffer = new byte[10 * 1024 * 1024]; // 10 MB
+
+            try
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
+                    if (bytesRead == 0) // Client disconnected
+                        break;
+
+                    string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    Console.WriteLine($"Message from {username}: {message}");
+                    Logging.Handler.Debug("Service.Remote_Agent_Server_HandleClientMessages", "Message from client", message);
+
+                    // Split message per $
+                    string[] messageParts = message.Split('$');
+
+                    // Handle specific commands, e.g., template code
+                    if (messageParts[0] == "screen_capture")
+                    {
+                        // Test write screenshot to file, its a base64 encoded image
+
+                        // Decode to byte array
+                        //byte[] imageBytes = Convert.FromBase64String(messageParts[2]);
+
+                        // Write to file
+                        //File.WriteAllBytes("C:\\screenshot.jpg", imageBytes);
+
+                        // Respond with device identity
+                        await remote_server_client.InvokeAsync("ReceiveClientResponse", messageParts[1], messageParts[2]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error handling messages from {username}: {ex.Message}");
+                Logging.Handler.Error("Service.Remote_Agent_Server_HandleClientMessages", "Error handling messages from client.", ex.ToString());
+            }
+            finally
+            {
+                // Clean up when client disconnects
+                lock (_clients)
+                {
+                    _clients.Remove(username);
+                }
+
+                stream.Close();
+                client.Close();
+                Console.WriteLine($"Client {username} disconnected.");
+                Logging.Handler.Debug("Service.Remote_Agent_Server_HandleClientMessages", "Client disconnected", username);
+            }
+        }
+
+        public async Task SendToClient(string username, string message)
+        {
+            try
+            {
+                if (_clients.TryGetValue(username, out TcpClient client) && client.Connected)
+                {
+                    NetworkStream stream = client.GetStream();
+                    byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+                    await stream.WriteAsync(messageBytes, 0, messageBytes.Length);
+                    await stream.FlushAsync();
+                    Console.WriteLine($"Sent message to {username}: {message}");
+                    Logging.Handler.Debug("Service.Remote_Agent_Server_SendToClient", "Sent message to client", message);
+                }
+                else
+                {
+                    Console.WriteLine($"No client connected with username: {username}");
+                    Logging.Handler.Error("Service.Remote_Agent_Server_SendToClient", "No client connected with username", username);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to send message to {username}: {ex.Message}");
+                Logging.Handler.Error("Service.Remote_Agent_Server_SendToClient", "Failed to send message to client", ex.ToString());
+            }
+        }
+
+        public void Stop()
+        {
+            _cancellationTokenSourceLocal.Cancel();
+            _listener.Stop();
+            Console.WriteLine("Server stopped.");
+            Logging.Handler.Debug("Service.Remote_Agent_Server_Stop", "Server stopped.", "");
+        }
     }
+
+    #endregion
 }
 
