@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceProcess;
@@ -12,6 +13,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
+
         static void Main()
         {
             ServiceBase[] ServicesToRun;
@@ -20,6 +22,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
                 new Service()
             };
             ServiceBase.Run(ServicesToRun);
+            
         }
     }
 }
