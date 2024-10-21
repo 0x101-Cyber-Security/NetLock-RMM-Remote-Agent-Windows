@@ -93,22 +93,25 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
         protected override async void OnStart(string[] args)
         {
-            Logging.Handler.Debug("Service.OnStart", "Service started", "Information");
+            try
+            {
+                Logging.Handler.Debug("Service.OnStart", "Service started", "Information");
 
-            //_ = Task.Run(async () => await Local_Server_Start());
+                // Start the SignalR server when the service starts
+                _ = Task.Run(async () => await SignalRHttpServerSingleton.Instance.StartAsync());
 
-            // Start the timer to check remote_server_client status every minute
-            remote_server_clientCheckTimer = new Timer(async (e) => await Local_Server_Check_Connection_Status(), null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
+                // Starte den Timer zum Überprüfen des Remote-Server-Status
+                remote_server_clientCheckTimer = new Timer(async (e) => await Local_Server_Check_Connection_Status(), null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
 
-            // Start the SignalR server when the service starts
-            //SignalRHttpServer server = new SignalRHttpServer();
-            //await server.StartAsync();
-
-            //_ = Task.Run(async () => await server.StartAsync());
-
-            //await Local_Server_Start();
-            await Local_Server_Connect();
+                // Verbindungsaufbau zum Local Server
+                await Local_Server_Connect();
+            }
+            catch (Exception ex)
+            {
+                Logging.Handler.Error("Service.OnStart", "Error during service startup.", ex.ToString());
+            }
         }
+
 
         protected override void OnStop()
         {

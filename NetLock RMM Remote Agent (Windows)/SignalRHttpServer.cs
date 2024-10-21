@@ -7,21 +7,52 @@ using System.Threading.Tasks;
 
 namespace NetLock_RMM_Remote_Agent_Windows
 {
-    internal class SignalRHttpServer
+    public class SignalRHttpServerSingleton
     {
+        private static SignalRHttpServerSingleton _instance;
+        private static readonly object _lock = new object();
+        private HttpListener _listener;
+        private bool _isRunning;
+
+        private SignalRHttpServerSingleton()
+        {
+            _listener = new HttpListener();
+            _listener.Prefixes.Add("http://localhost:7338/commandHub/");
+        }
+
+        public static SignalRHttpServerSingleton Instance
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new SignalRHttpServerSingleton();
+                    }
+                    return _instance;
+                }
+            }
+        }
+
         public async Task StartAsync()
         {
+            if (_isRunning)
+            {
+                Logging.Handler.Debug("SignalRHttpServer", "StartAsync", "Server is already running.");
+                return;
+            }
+
             try
             {
-                HttpListener listener = new HttpListener();
-                listener.Prefixes.Add("http://localhost:7338/commandHub/");
-                listener.Start();
+                _listener.Start();
+                _isRunning = true;
 
-                Console.WriteLine("SignalR HTTP Server is running...");
+                Logging.Handler.Debug("SignalRHttpServer", "StartAsync", "Server started.");
 
                 while (true)
                 {
-                    HttpListenerContext context = await listener.GetContextAsync();
+                    HttpListenerContext context = await _listener.GetContextAsync();
                     HttpListenerRequest request = context.Request;
 
                     // Handle the request (this is where SignalR processing would occur)
@@ -34,9 +65,20 @@ namespace NetLock_RMM_Remote_Agent_Windows
             }
             catch (Exception ex)
             {
+                _isRunning = false;
                 Logging.Handler.Error("SignalRHttpServer", "StartAsync", ex.ToString());
-                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        public void Stop()
+        {
+            if (_listener != null && _isRunning)
+            {
+                _listener.Stop();
+                _isRunning = false;
+                Logging.Handler.Debug("SignalRHttpServer", "Stop", "Server stopped.");
             }
         }
     }
+
 }
