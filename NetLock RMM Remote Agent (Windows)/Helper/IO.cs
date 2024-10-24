@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using static NetLock_RMM_Remote_Agent_Windows.Service;
 
-namespace NetLock_RMM_Remote_Agent_Windows.Helper
+namespace Helper
 {
     internal class IO
     {
@@ -20,6 +20,7 @@ namespace NetLock_RMM_Remote_Agent_Windows.Helper
             public DateTime last_modified { get; set; }
         }
 
+        
         // Get drives
         public static string Get_Drives()
         {
@@ -96,25 +97,28 @@ namespace NetLock_RMM_Remote_Agent_Windows.Helper
 
         public static async Task<string> GetSizeFormatted(long sizeInBytes)
         {
-            if (sizeInBytes >= 1024 * 1024 * 1024) // Check for GB
+            return await Task.Run(() =>
             {
-                double sizeInGB = sizeInBytes / (1024.0 * 1024.0 * 1024.0);
-                return sizeInGB.ToString("F2") + " GB";
-            }
-            else if (sizeInBytes >= 1024 * 1024) // Check for MB
-            {
-                double sizeInMB = sizeInBytes / (1024.0 * 1024.0);
-                return sizeInMB.ToString("F2") + " MB";
-            }
-            else if (sizeInBytes >= 1024) // Check for KB
-            {
-                double sizeInKB = sizeInBytes / 1024.0;
-                return sizeInKB.ToString("F2") + " KB";
-            }
-            else // Bytes
-            {
-                return sizeInBytes.ToString() + " Bytes";
-            }
+                if (sizeInBytes >= 1024 * 1024 * 1024) // Check for GB
+                {
+                    double sizeInGB = sizeInBytes / (1024.0 * 1024.0 * 1024.0);
+                    return sizeInGB.ToString("F2") + " GB";
+                }
+                else if (sizeInBytes >= 1024 * 1024) // Check for MB
+                {
+                    double sizeInMB = sizeInBytes / (1024.0 * 1024.0);
+                    return sizeInMB.ToString("F2") + " MB";
+                }
+                else if (sizeInBytes >= 1024) // Check for KB
+                {
+                    double sizeInKB = sizeInBytes / 1024.0;
+                    return sizeInKB.ToString("F2") + " KB";
+                }
+                else // Bytes
+                {
+                    return sizeInBytes.ToString() + " Bytes";
+                }
+            });
         }
 
         public static async Task<string> Get_Directory_Size(DirectoryInfo directory)

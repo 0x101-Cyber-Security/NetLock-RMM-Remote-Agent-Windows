@@ -11,9 +11,17 @@ using Microsoft.AspNetCore.SignalR.Client;
 using System.Threading;
 using System.Net.Sockets;
 using System.Text.Json;
-using NetLock_RMM_Remote_Agent_Windows.Helper;
 using System.IO;
 using System.CodeDom;
+using System.Xml.Linq;
+using System.Net;
+using System.Security.Principal;
+using System.Runtime.Remoting.Messaging;
+using System.Collections.Concurrent;
+using System.Runtime.Remoting.Contexts;
+using Microsoft.Extensions.Logging;
+using System.Net.Http.Headers;
+using System.Net.Http;
 
 namespace NetLock_RMM_Remote_Agent_Windows
 {
@@ -30,9 +38,9 @@ namespace NetLock_RMM_Remote_Agent_Windows
         private NetworkStream _stream;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-        // Remote Server
-        string remote_ssl = String.Empty;
+        // Remote Server Client
         string remote_server_url = String.Empty;
+        string remote_server_url_command = String.Empty;
         private HubConnection remote_server_client;
         private Timer remote_server_clientCheckTimer;
         bool remote_server_client_setup = false;
@@ -43,8 +51,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
         // Device Identity
         public string device_identity = String.Empty;
 
-<<<<<<< Updated upstream
-=======
         public class Device_Identity
         {
             public bool ssl { get; set; }
@@ -91,7 +97,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
             public string command { get; set; } // used for service, task manager, screen capture
         }
 
->>>>>>> Stashed changes
         public Service()
         {
             InitializeComponent();
@@ -99,15 +104,24 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
         protected override async void OnStart(string[] args)
         {
-            Logging.Handler.Debug("Service.OnStart", "Service started", "Information");
+            try
+            {
+                Logging.Handler.Debug("Service.OnStart", "Service started", "Information");
 
-            //_ = Task.Run(async () => await Local_Server_Connect());
-            
-            await Local_Server_Connect();
+                // Starte den Timer zum Überprüfen des Remote-Server-Status
+                remote_server_clientCheckTimer = new Timer(async (e) => await Local_Server_Check_Connection_Status(), null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
 
-            // Start the timer to check remote_server_client status every minute
-            remote_server_clientCheckTimer = new Timer(async (e) => await Local_Server_Check_Connection_Status(), null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
+                _ = Task.Run(async () => await Local_Server_Start());
+
+                // Verbindungsaufbau zum Local Server
+                await Local_Server_Connect();
+            }
+            catch (Exception ex)
+            {
+                Logging.Handler.Error("Service.OnStart", "Error during service startup.", ex.ToString());
+            }
         }
+
 
         protected override void OnStop()
         {
@@ -162,25 +176,17 @@ namespace NetLock_RMM_Remote_Agent_Windows
                             Logging.Handler.Error("Service.Local_Server_Handle_Server_Messages", "Device identity is empty or not ready yet.", "");
                         else
                         {
-                            device_identity = messageParts[1];
-<<<<<<< Updated upstream
-                            remote_server_url = $"{messageParts[2]}/commandHub";
-
-                            Logging.Handler.Debug("Service.Local_Server_Handle_Server_Messages", "Device identity", device_identity);
-                            Logging.Handler.Debug("Service.Local_Server_Handle_Server_Messages", "Remote server URL", remote_server_url);
-=======
-
-                            // if messageParts[2] == http or https
                             if (messageParts[2] == "http")
                                 ssl = false;
                             else if (messageParts[2] == "https")
                                 ssl = true;
 
+                            device_identity = messageParts[1];
                             remote_server_url = $"{messageParts[3]}/commandHub";
                             remote_server_url_command = $"{messageParts[3]}";
                             file_server_url = $"{messageParts[4]}";
 
-                            // if ssl is true, add https:// to the remote_server_url
+                            // if messageParts[2] (ssl) is true, use https, else http
                             if (ssl)
                             {
                                 remote_server_url = "https://" + remote_server_url;
@@ -196,7 +202,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
                             Logging.Handler.Debug("Service.Local_Server_Handle_Server_Messages", "Remote server URL", remote_server_url);
                             Logging.Handler.Debug("Service.Local_Server_Handle_Server_Messages", "Remote server URL (command)", remote_server_url_command);
                             Logging.Handler.Debug("Service.Local_Server_Handle_Server_Messages", "File server URL", file_server_url);
->>>>>>> Stashed changes
                         }
                     }
                 }
@@ -239,19 +244,27 @@ namespace NetLock_RMM_Remote_Agent_Windows
                     await Local_Server_Send_Message("get_device_identity");
 
                     // Check if the remote_server_client is setup
-                    if (!String.IsNullOrEmpty(device_identity) && !remote_server_client_setup) // If the device identity is not empty and the remote_server_client is not setup, setup the remote_server_client
+                    if (!String.IsNullOrEmpty(device_identity) && !remote_server_client_setup)
+                    {
+                        // If the device identity is not empty and the remote_server_client is not setup, setup the remote_server_client
                         await Setup_SignalR();
-                    else if (!String.IsNullOrEmpty(device_identity) && remote_server_client.State == HubConnectionState.Disconnected) // If the device identity is not empty and the remote_server_client is disconnected, reconnect
+                    }
+                    else if (!String.IsNullOrEmpty(device_identity) && remote_server_client.State == HubConnectionState.Disconnected)
+                    {
+                        // If the device identity is not empty and the remote_server_client is disconnected, reconnect
                         await Remote_Connect();
-                    else if (!String.IsNullOrEmpty(device_identity) && remote_server_client.State == HubConnectionState.Connected) // If the device identity is not empty and the remote_server_client is connected, do nothing
+                    }
+                    else if (!String.IsNullOrEmpty(device_identity) && remote_server_client.State == HubConnectionState.Connected)
+                    {
+                        // If the device identity is not empty and the remote_server_client is connected, do nothing
                         Logging.Handler.Debug("Service.Check_Connection_Status", "Remote server connection is already active.", "");
+                    }
                 }
                 else
                 {
                     Logging.Handler.Debug("Service.Check_Connection_Status", "Local server connection lost, attempting to reconnect.", "");
                     await Local_Server_Connect();
                 }
-
             }
             catch (Exception ex)
             {
@@ -274,14 +287,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
                 Logging.Handler.Debug("Service.Setup_SignalR", "Device identity JSON", device_identity);
 
-<<<<<<< Updated upstream
-                remote_server_client = new HubConnectionBuilder()
-                    .WithUrl(remote_server_url, options =>
-                    {
-                        options.Headers.Add("Device-Identity", Uri.EscapeDataString(device_identity));
-                    })
-                    .Build();
-=======
                 // Deserialise device identity
                 var jsonDocument = JsonDocument.Parse(device_identity);
                 var deviceIdentityElement = jsonDocument.RootElement.GetProperty("device_identity");
@@ -304,18 +309,13 @@ namespace NetLock_RMM_Remote_Agent_Windows
                     logging.SetMinimumLevel(LogLevel.Warning);
                 })
                 .Build();
->>>>>>> Stashed changes
 
                 remote_server_client.On<string>("ReceiveMessage", async (command) =>
                 {
                     Logging.Handler.Debug("Service.Setup_SignalR", "ReceiveMessage", command);
 
                     // Insert the logic here to execute the command
-<<<<<<< Updated upstream
-                    
-=======
 
->>>>>>> Stashed changes
                     // Example: If the command is "sync", send a message to the local server to force a sync with the remote server
                     if (command == "sync")
                         await Local_Server_Send_Message("sync");
@@ -326,128 +326,12 @@ namespace NetLock_RMM_Remote_Agent_Windows
                 {
                     Logging.Handler.Debug("Service.Setup_SignalR", "SendMessageToClientAndWaitForResponse", command);
 
-<<<<<<< Updated upstream
-                    // Insert the logic here to execute the command
-                    // Deserialisation of the entire JSON string
-
-                    int type = 0;
-                    bool wait_response = false;
-                    string powershell_code = String.Empty;
-                    string response_id = String.Empty;
-                    int file_browser_command = 0;
-                    string file_browser_path = String.Empty ;
-                    string file_browser_path_move = String.Empty ;
-                    string file_browser_file_content = String.Empty ;
-
-                    using (JsonDocument document = JsonDocument.Parse(command))
-                    {
-                        // type 
-                        JsonElement type_element = document.RootElement.GetProperty("type");
-                        type = Convert.ToInt32(type_element.ToString());
-
-                        // wait_response
-                        JsonElement wait_response_element = document.RootElement.GetProperty("wait_response");
-                        wait_response = Convert.ToBoolean(wait_response_element.ToString());
-
-                        // powershell_code
-                        JsonElement powershell_code_element = document.RootElement.GetProperty("powershell_code");
-                        powershell_code = powershell_code_element.ToString();
-
-                        // file_browser_command
-                        JsonElement file_browser_command_element = document.RootElement.GetProperty("file_browser_command");
-                        file_browser_command = Convert.ToInt32(file_browser_command_element.ToString());
-
-                        // file_browser_path
-                        JsonElement file_browser_path_element = document.RootElement.GetProperty("file_browser_path");
-                        file_browser_path = file_browser_path_element.ToString();
-
-                        // file_browser_path_move
-                        JsonElement file_browser_path_move_element = document.RootElement.GetProperty("file_browser_path_move");
-                        file_browser_path_move = file_browser_path_move_element.ToString();
-
-                        // file_browser_file_content
-                        JsonElement file_browser_file_content_element = document.RootElement.GetProperty("file_browser_file_content");
-                        file_browser_file_content = file_browser_file_content_element.ToString();
-
-                        // response_id
-                        if (wait_response)
-                        {
-                            JsonElement response_id_element = document.RootElement.GetProperty("response_id");
-                            response_id = response_id_element.GetString();
-                        }
-                    }
-
-=======
                     // Deserialisation of the entire JSON string
                     Command_Entity command_object = JsonSerializer.Deserialize<Command_Entity>(command);
->>>>>>> Stashed changes
                     // Example: If the type is 0, execute the powershell code and send the response back to the remote server if wait_response is true
 
                     string result = string.Empty;
 
-<<<<<<< Updated upstream
-                    if (type == 0) // Remote Shell
-                    {
-                        result = PowerShell.Execute_Script(type.ToString(), powershell_code);
-                        Logging.Handler.Debug("Client", "PowerShell executed", result);
-
-                        // Send the response back to the server || Depreceated cause it always makes sense to wait for a response tho
-                        /*if (wait_response)
-                        {
-                            Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
-                            await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
-                            Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
-                        }*/
-                    }
-                    else if (type == 1) // File Browser
-                    {
-                        // 0 = get drives, 1 = index, 2 = create dir, 3 = delete dir, 4 = move dir, 5 = rename dir, 6 = create file, 7 = delete file, 8 = move file, 9 = rename file
-
-                        // File Browser Command
-                        try
-                        {
-                            if (file_browser_command == 0) // Get drives
-                            {
-                                result = IO.Get_Drives();
-                            }
-                            if (file_browser_command == 1) // index
-                            {
-                                // Get all directories and files in the specified path, create a json including date, size and file type
-                                var directoryDetails = IO.Get_Directory_Index(file_browser_path).GetAwaiter().GetResult();
-                                result = JsonSerializer.Serialize(directoryDetails, new JsonSerializerOptions { WriteIndented = true });
-                            }
-                            else if (file_browser_command == 2) // create dir
-                            {
-                                result = IO.Create_Directory(file_browser_path);
-                            }
-                            else if (file_browser_command == 3) // delete dir
-                            {
-                                result = IO.Delete_Directory(file_browser_path).ToString();
-                            }
-                            else if (file_browser_command == 4) // move dir
-                            {
-                                result = IO.Move_Directory(file_browser_path, file_browser_path_move);
-                            }
-                            else if (file_browser_command == 5) // rename dir
-                            {
-                                result = IO.Rename_Directory(file_browser_path, file_browser_path_move);
-                            }
-                            else if (file_browser_command == 6) // create file
-                            {
-                                result = await IO.Create_File(file_browser_path, file_browser_file_content);
-                            }
-                            else if (file_browser_command == 7) // delete file
-                            {
-                                result = IO.Delete_File(file_browser_path).ToString();
-                            }
-                            else if (file_browser_command == 8) // move file
-                            {
-                                result = IO.Move_File(file_browser_path, file_browser_path_move);
-                            }
-                            else if (file_browser_command == 9) // rename file
-                            {
-                                result = IO.Rename_File(file_browser_path, file_browser_path_move);
-=======
                     try
                     {
                         if (command_object.type == 0) // Remote Shell
@@ -506,7 +390,7 @@ namespace NetLock_RMM_Remote_Agent_Windows
                             else if (command_object.file_browser_command == 10) // download file
                             {
                                 // download url with tenant guid, location guid & device name
-                                string download_url =  file_server_url + "/admin/files/download/device" + "?guid=" + command_object.file_browser_file_guid + "&tenant_guid=" + device_identity_object.tenant_guid + "&location_guid=" + device_identity_object.location_guid + "&device_name=" + device_identity_object.device_name + "&access_key=" + device_identity_object.access_key + "&hwid=" + device_identity_object.hwid;
+                                string download_url = file_server_url + "/admin/files/download/device" + "?guid=" + command_object.file_browser_file_guid + "&tenant_guid=" + device_identity_object.tenant_guid + "&location_guid=" + device_identity_object.location_guid + "&device_name=" + device_identity_object.device_name + "&access_key=" + device_identity_object.access_key + "&hwid=" + device_identity_object.hwid;
 
                                 Logging.Handler.Debug("Service.Setup_SignalR", "Download URL", download_url);
                                 result = await Helper.Http.DownloadFileAsync(ssl, download_url, command_object.file_browser_path, device_identity_object.package_guid);
@@ -596,7 +480,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
 
                                 // Return because no further action is required
                                 return;
->>>>>>> Stashed changes
                             }
                         }
                     }
@@ -606,17 +489,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
                         Logging.Handler.Error("Service.Setup_SignalR", "Failed to execute file browser command.", ex.ToString());
                     }
 
-<<<<<<< Updated upstream
-                    }
-
-                    // Send the response back to the server
-                    if (!String.IsNullOrEmpty(type.ToString()))
-                    {
-                        Logging.Handler.Debug("Client", "Sending response back to the server", "result: " + result + "response_id: " + response_id);
-                        await remote_server_client.InvokeAsync("ReceiveClientResponse", response_id, result);
-                        Logging.Handler.Debug("Client", "Response sent back to the server", "result: " + result + "response_id: " + response_id);
-                    }
-=======
                     // Send the response back to the server
                     if (!String.IsNullOrEmpty(command_object.type.ToString()))
                     {
@@ -626,7 +498,6 @@ namespace NetLock_RMM_Remote_Agent_Windows
                     }
 
                     await Task.CompletedTask;
->>>>>>> Stashed changes
                 });
 
                 // Start the connection
@@ -664,6 +535,284 @@ namespace NetLock_RMM_Remote_Agent_Windows
                 Logging.Handler.Error("Service.Remote_Connect", "Failed to connect to the server.", ex.ToString());
             }
         }
+
+
+        #region Remote Agent Local Server
+
+        private const int Remote_Agent_Local_Port = 7338;
+        private ConcurrentDictionary<string, TcpClient> _clients = new ConcurrentDictionary<string, TcpClient>(); // Clients by username
+        private TcpListener _listener;
+        private CancellationTokenSource _cancellationTokenSourceLocal = new CancellationTokenSource();
+        private SemaphoreSlim _connectionSemaphore = new SemaphoreSlim(100); // Limit to 100 concurrent clients
+        private const int BufferSize = 10 * 1024 * 1024; // 10 MB Buffer
+
+        public async Task Local_Server_Start()
+        {
+            try
+            {
+                Logging.Handler.Debug("Service.Remote_Agent_Local_Server_Start", "Starting server...", "");
+                Console.WriteLine("Starting server...");
+                _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), Remote_Agent_Local_Port);
+                _listener.Start();
+                Console.WriteLine("Remote Agent Server started. Waiting for connections...");
+                Logging.Handler.Debug("Service.Remote_Agent_Local_Server_Start", "Server started. Waiting for connections...", "");
+
+                while (!_cancellationTokenSourceLocal.Token.IsCancellationRequested)
+                {
+                    await _connectionSemaphore.WaitAsync(); // Throttle connections
+                    var client = await _listener.AcceptTcpClientAsync();
+                    if (client != null)
+                    {
+                        _ = Local_Server_Handle_Client(client, _cancellationTokenSourceLocal.Token); // Handle client asynchronously
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error starting server: {ex.Message}");
+                Logging.Handler.Error("Service.Remote_Agent_Local_Server_Start", "Error starting server.", ex.ToString());
+            }
+        }
+
+        private async Task Local_Server_Handle_Client(TcpClient client, CancellationToken cancellationToken)
+        {
+            NetworkStream stream = client.GetStream();
+            byte[] buffer = new byte[BufferSize];
+
+            try
+            {
+                client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true); // Enable KeepAlive
+
+                // Wait for the client to send the username first
+                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
+                string initialMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                string[] messageParts = initialMessage.Split('$');
+
+                if (messageParts[0] == "username")
+                {
+                    string username = messageParts[1];
+                    Console.WriteLine($"Client connected: {username}");
+                    Logging.Handler.Debug("Service.Remote_Agent_Local_Server_Handle_Client", "Client connected", username);
+
+                    // Add the client to the dictionary
+                    _clients[username] = client;
+
+                    // Handle messages from the client
+                    await HandleClientMessages(username, client, stream, cancellationToken);
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Client connection closed: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error handling client: {ex.Message}");
+                Logging.Handler.Error("Service.Remote_Agent_Local_Server_Handle_Client", "Error handling client.", ex.ToString());
+            }
+            finally
+            {
+                stream.Close();
+                client.Close();
+                _clients.TryRemove(client.Client.RemoteEndPoint.ToString(), out _); // Remove from dictionary
+                _connectionSemaphore.Release(); // Release the connection slot
+            }
+        }
+
+        private async Task HandleClientMessages(string username, TcpClient client, NetworkStream stream, CancellationToken cancellationToken)
+        {
+            byte[] buffer = new byte[BufferSize];
+
+            try
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
+                    if (bytesRead == 0) // Client disconnected
+                        break;
+
+                    string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    Logging.Handler.Debug("Service.Remote_Agent_Server_HandleClientMessages", $"Message from user {username}", "not displaying due to high data usage");
+
+                    // Process client message
+                    try
+                    {
+                        Logging.Handler.Remote_Control("Service.Remote_Agent_Server_HandleClientMessages", "Processing message", "Task triggered");
+                        await ProcessMessage(message);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logging.Handler.Error("Service.Remote_Agent_Server_ProcessMessage", "Error invoking client response.", ex.ToString());
+                    }
+
+                    // Der code wird nicht ausgeführt
+                    /*_ = Task.Run(async () =>
+                    {
+                       
+                    });*/
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Connection closed with {username}: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error handling messages from {username}: {ex.Message}");
+                Logging.Handler.Error("Service.Remote_Agent_Server_HandleClientMessages", "Error handling messages from client.", ex.ToString());
+            }
+            finally
+            {
+                stream.Close();
+                client.Close();
+                _clients.TryRemove(username, out _);
+                Logging.Handler.Debug("Service.Remote_Agent_Server_HandleClientMessages", "Client disconnected", username);
+            }
+        }
+
+        private async Task ProcessMessage(string message)
+        {
+            try
+            {
+                Logging.Handler.Remote_Control("Service.Remote_Agent_Server_ProcessMessage", "Processing message", "Task triggered");
+
+                // Split message per $
+                string[] messageParts = message.Split('$');
+
+                // Handle specific commands, e.g., template code
+                if (messageParts[0] == "screen_capture")
+                {
+                    // Respond with device identity
+                    Logging.Handler.Debug("Service.Remote_Agent_Server_ProcessMessage", "Message Received", messageParts[1]);
+
+                    try
+                    {
+                        //await remote_server_client.InvokeAsync("ReceiveClientResponse", messageParts[1], messageParts[2]);
+
+                        await Remote_Control_Send_Screen(messageParts[1], messageParts[2]);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logging.Handler.Error("Service.Remote_Agent_Server_ProcessMessage", "Error invoking client response.", ex.ToString());
+                    }
+                }
+                else if (messageParts[0] == "screen_indexes")
+                {
+                    await remote_server_client.SendAsync("ReceiveClientResponse", messageParts[1], messageParts[2]);
+                }
+                else if (messageParts[0] == "users")
+                {
+                    await remote_server_client.SendAsync("ReceiveClientResponse", messageParts[1], messageParts[2]);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Handler.Error("Service.Remote_Agent_Server_ProcessMessage", "Error processing message.", ex.ToString());
+            }
+        }
+
+        public async Task SendToClient(string username, string message)
+        {
+            try
+            {
+                Logging.Handler.Debug("Service.Remote_Agent_Server_SendToClient", "Sending message to client", message);
+
+                if (_clients.TryGetValue(username, out TcpClient client) && client.Connected)
+                {
+                    NetworkStream stream = client.GetStream();
+                    // Append a newline character to the message to signify the end of the message
+                    string messageWithDelimiter = message + "\n"; // Use "\n" or any other delimiter
+                    byte[] messageBytes = Encoding.UTF8.GetBytes(messageWithDelimiter);
+                    await stream.WriteAsync(messageBytes, 0, messageBytes.Length);
+                    await stream.FlushAsync();
+
+                    Console.WriteLine($"Sent message to {username}: {message}");
+                    Logging.Handler.Debug("Service.Remote_Agent_Server_SendToClient", "Sent message to client", message);
+                }
+                else
+                {
+                    Console.WriteLine($"No client connected with username: {username}");
+                    Logging.Handler.Error("Service.Remote_Agent_Server_SendToClient", "No client connected with username", username);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to send message to {username}: {ex.Message}");
+                Logging.Handler.Error("Service.Remote_Agent_Server_SendToClient", "Failed to send message to client", ex.ToString());
+            }
+        }
+
+        private async Task Remote_Control_Send_Screen(string response_id, string message)
+        {
+            try
+            {
+                // Deserialise device identity
+                var jsonDocument = JsonDocument.Parse(device_identity);
+                var deviceIdentityElement = jsonDocument.RootElement.GetProperty("device_identity");
+
+                Device_Identity device_identity_object = JsonSerializer.Deserialize<Device_Identity>(deviceIdentityElement.ToString());
+
+                Logging.Handler.Debug("device_identity_object", "", device_identity_object.package_guid);
+
+                // Create the new full JSON object
+                var fullJson = new
+                {
+                    device_identity = device_identity_object, // Original deserialized device identity
+                    remote_control = new // Manually added section
+                    {
+                        response_id = response_id,
+                        result = message
+                    }
+                };
+
+                // Serialize the full JSON back into a string
+                string outputJson = JsonSerializer.Serialize(fullJson, new JsonSerializerOptions { WriteIndented = true });
+
+                Logging.Handler.Debug("Remote_Control_Send_Screen", "outputJson", outputJson);
+
+                // Create a HttpClient instance
+                using (var httpClient = new HttpClient())
+                {
+                    // Set the content type header
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    httpClient.DefaultRequestHeaders.Add("Package_Guid", device_identity_object.package_guid);
+
+                    Logging.Handler.Debug("Remote_Control_Send_Screen", "communication_server", remote_server_url_command + "/Agent/Windows/Remote/Command");
+
+                    // Send the JSON data to the server
+                    var response = await httpClient.PostAsync(remote_server_url_command + "/Agent/Windows/Remote/Command", new StringContent(outputJson, Encoding.UTF8, "application/json"));
+
+                    // Check if the request was successful
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Request was successful, handle the response
+                        var result = await response.Content.ReadAsStringAsync();
+                        Logging.Handler.Debug("Remote_Control_Send_Screen", "result", result);
+                    }
+                    else
+                    {
+                        // Request failed, handle the error
+                        Logging.Handler.Debug("Remote_Control_Send_Screen", "request", "Request failed: " + response.StatusCode + " " + response.Content.ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Handler.Error("Remote_Control_Send_Screen", "failed", ex.ToString());
+            }
+
+          
+        }
+
+        public void Stop()
+        {
+            _cancellationTokenSourceLocal.Cancel();
+            _listener.Stop();
+            Console.WriteLine("Server stopped.");
+            Logging.Handler.Debug("Service.Remote_Agent_Server_Stop", "Server stopped.", "");
+        }
+        
     }
+    #endregion
 }
 

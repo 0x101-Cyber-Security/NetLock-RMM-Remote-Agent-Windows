@@ -3,48 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|c:\\users\\nicomak\\netlock root\\netlock-rmm-remote-agent-windows\\netlock rmm remote agent (windows)\\helper\\io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|c:\\users\\nicomak\\netlock root\\netlock-rmm-remote-agent-windows\\netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|c:\\users\\nicomak\\netlock root\\netlock-rmm-remote-agent-windows\\netlock rmm remote agent (windows)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\helper\\encryption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\encryption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\initialization\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\initialization\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\helper\\logging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\logging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\application_paths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\application_paths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\netlock_rmm_remote_agent_windows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\helper\\powershell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\powershell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\helper\\registry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\helper\\registry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\netlock rmm remote agent (windows)\\projectinstaller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{9EA33790-EC76-406A-8DD6-FBE55F126063}|NetLock RMM Remote Agent (Windows)\\NetLock RMM Remote Agent (Windows).csproj|solutionrelative:netlock rmm remote agent (windows)\\projectinstaller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,143 +18,33 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Logging.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Logging.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\Logging.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Logging.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\Logging.cs",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAkwBkAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.121Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Program.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Program.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Program.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.123Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Health.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Initialization\\Health.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Initialization\\Health.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Initialization\\Health.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Initialization\\Health.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAACoAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.124Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "PowerShell.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\PowerShell.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\PowerShell.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\PowerShell.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\PowerShell.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAWwCsAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.124Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Registry.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Registry.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\Registry.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Registry.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\Registry.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.125Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Application_Paths.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Application_Paths.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Application_Paths.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Application_Paths.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Application_Paths.cs",
-              "ViewState": "AQIAAAEAAAAAAAAAAAAAAAsAAABvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.126Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "NetLock_RMM_Remote_Agent_Windows.cs",
               "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
               "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
               "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
               "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
-              "ViewState": "AQIAAAcBAAAAAAAAAAAjwCoBAAAKAAAA",
+              "ViewState": "AQIAAJcAAAAAAAAAAAAYwKgAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.205Z",
+              "WhenOpened": "2024-10-24T18:44:48.134Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "IO.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\IO.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\IO.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\IO.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\IO.cs",
-              "ViewState": "AQIAAFAAAAAAAAAAAAAjwHIAAAANAAAA",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Program.cs",
+              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Program.cs",
+              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Program.cs",
+              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-01T13:52:17.467Z",
+              "WhenOpened": "2024-10-24T18:44:44.49Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Encryption.cs",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\Helper\\Encryption.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-02T13:22:17.444Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ProjectInstaller.cs [Entwurf]",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\ProjectInstaller.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\ProjectInstaller.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\Desktop\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\ProjectInstaller.cs [Entwurf]",
-              "RelativeToolTip": "..\\..\\Desktop\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\ProjectInstaller.cs [Entwurf]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000587|",
-              "WhenOpened": "2024-06-19T11:42:44.238Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "NetLock_RMM_Remote_Agent_Windows.cs [Entwurf]",
-              "DocumentMoniker": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
-              "RelativeDocumentMoniker": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs",
-              "ToolTip": "C:\\Users\\NicoMak\\NetLock Root\\NetLock-RMM-Remote-Agent-Windows\\NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs [Entwurf]",
-              "RelativeToolTip": "NetLock RMM Remote Agent (Windows)\\NetLock_RMM_Remote_Agent_Windows.cs [Entwurf]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T11:42:44.238Z",
-              "EditorCaption": " [Entwurf]"
             }
           ]
         },
